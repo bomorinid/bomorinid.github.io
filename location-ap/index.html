@@ -1,0 +1,137 @@
+<html>
+<head>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+	<script type="text/javascript" src="countries.js"></script>
+	<script type="text/javascript" src="ap-states.js"></script>
+	<script type="text/javascript">
+		(function (){
+			'use strict';
+			angular.module('prepop.project', [])
+				.controller('ProjectController', [ '$scope', ProjectController ]);
+
+			function ProjectController($scope) {
+				$scope.company = null;
+				$scope.url = null;
+				$scope.country = '';
+				$scope.city = '';
+				$scope.state = '';
+				$scope.body = '';
+				$scope.preview = '';
+
+				$scope.city = $scope.city.toUpperCase();
+
+				$scope.countries = window.locations.countries;
+				$scope.apStates = window.apStates;
+
+				$scope.updateCity = function() {
+					$scope.city = $scope.city.toUpperCase();
+				}
+
+				$scope.updateCountry = function(selected_country) {
+					$scope.countries.forEach(function(c){
+						if (c.country == selected_country) {
+							$scope.country = c;
+						}
+					});
+					$scope.state = null;
+				}
+
+				$scope.updateState = function(selected_state) {
+					$scope.state = null;
+					$scope.apStates.forEach(function(apState) {
+						if (apState.name == selected_state) {
+							$scope.state = apState;
+							if (!($scope.state.abbr).endsWith('.')) {
+								$scope.state.abbr = $scope.state.abbr + '.';
+							}
+						}
+					});
+					if ($scope.state == null) {
+						$scope.state = {
+							name: selected_state,
+							abbr: selected_state + '.',
+						}
+					}
+				}
+
+				$scope.updatePreview = function() {
+					if ($scope.body.length > 30) {
+						$scope.preview = $scope.body.substring(0, 100) + '...';
+					} else {
+						$scope.preview = $scope.body;
+					}
+				}
+			}
+		
+		}());
+	</script>
+</head>
+
+<body ng-app='prepop.project' ng-controller='ProjectController'>
+	<form>
+		<label for="company">Company:</label>
+		<br />
+		<input type="text" name="company" id="id_company" ng-model="company">
+		<br />
+		<label for="url">URL:</label>
+		<br />
+		<input type="text" name="url" id="id_url" ng-model="url">
+		<br />
+
+
+		<label for="city">City:</label>
+		<br />
+		<input type="text" name="city" id="id_city" ng-model="city" ng-change="updateCity()">
+		<br />
+		
+		<label for="country">Country:</label>
+		<br />
+		<select name="country" id="id_country" ng-model="selected_country" ng-options="c.country as c.country for c in countries" ng-change="updateCountry(selected_country)"></select>
+		<br />
+		<span ng-show="country.country == 'United States'">
+			<label for="state">State:</label>
+			<br />
+			<select name="state" id="id_state" ng-model="selected_state" ng-options="state as state for state in country.states" ng-change="updateState(selected_state)"></select>
+		</span>
+		<br />
+		<label for="body">Body:</label>
+		<br />
+		<textarea name="body" id="id_body" ng-model="body" ng-change="updatePreview()">
+			
+		</textarea>
+	</form>
+	<div>Preview snippet:</div>
+	<div style="
+    	width: 500px;
+    	border: 1px solid #CCCCCC;
+	">
+		<div style="
+    		padding: 5px 5px 20px 5px;
+    	">
+			<span ng-if="city"><strong>{{city}}, </strong></span>
+			<span ng-if="!city"><strong>CITY, </strong></span>
+
+			<span ng-if="!country || country.country == 'United States'">
+				<span ng-if="state">{{state.abbr}}</span> 
+				<span ng-if="!state">State.</span> 
+			</span>
+			<span ng-if="country && country.country != 'United States'">
+				{{country.country}}.
+			</span>
+			<span ng-if="url && company">
+				<a href="{{url}}" target="_blank">{{company}}</a>
+			</span>
+			<span ng-if="!url || !company">
+				<a href="#" ng-click="">Company Link</a>
+			</span>
+			 - {{preview}}
+		</div>
+		<div style="
+			width: 100%;
+    		height: 20px;
+    		background-image: linear-gradient(#ffffff, #e8e8e8);">
+		</div>
+	</div>
+</body>
+
+</html>
