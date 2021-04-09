@@ -49,7 +49,7 @@ window.apStates = [
 	{"name": "Wyoming", "abbr": "Wyo.", "code": "WY"}
 ]
 
-window.apStatesStandalone = [
+window.apCityStandalone = [
 	"atlanta",
 	"baltimore",
 	"boston",

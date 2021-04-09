@@ -25,7 +25,7 @@
 
 				$scope.updateCity = function() {
 					$scope.city = $scope.city.toUpperCase();
-					if ($scope.city && window.apStatesStandalone.includes($scope.city.toLowerCase())) {
+					if ($scope.city && window.apCityStandalone.includes($scope.city.toLowerCase())) {
 						$scope.state.displayStateInDateline = false;
 					} else {
 						$scope.state.displayStateInDateline = true;
@@ -50,7 +50,7 @@
 								$scope.state.abbr = $scope.state.abbr + '.';
 							}
 
-							if ($scope.city && window.apStatesStandalone.includes($scope.city.toLowerCase())) {
+							if ($scope.city && window.apCityStandalone.includes($scope.city.toLowerCase())) {
 								$scope.state.displayStateInDateline = false;
 							} else {
 								$scope.state.displayStateInDateline = true;
@@ -125,7 +125,7 @@
 
 			<span ng-if="!country || country.country == 'United States'">
 				<span ng-if="state && state.displayStateInDateline">{{state.abbr}}</span> 
-				<span ng-if="!state && !window.apStatesStandalone.contains(city.toLowerCase())">State.</span> 
+				<span ng-if="!state || !window.apCityStandalone.contains(city.toLowerCase())">State.</span> 
 			</span>
 			<span ng-if="country && country.country != 'United States'">
 				{{country.country}}.
