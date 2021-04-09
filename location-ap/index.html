@@ -120,7 +120,7 @@
 		<div style="
     		padding: 5px 5px 20px 5px;
     	">
-			<span ng-if="city"><strong>{{city}}, </strong></span>
+			<span ng-if="city"><strong>{{city}}<span ng-if="state.displayStateInDateline">,</span> </strong></span>
 			<span ng-if="!city"><strong>CITY, </strong></span>
 
 			<span ng-if="!country || country.country == 'United States'">
@@ -131,12 +131,12 @@
 				{{country.country}}.
 			</span>
 			<span ng-if="url && company">
-				<a href="{{url}}" target="_blank">{{company}}</a>
+				- <a href="{{url}}" target="_blank">{{company}}</a>
 			</span>
 			<span ng-if="!url || !company">
-				<a href="#" ng-click="">Company Link</a>
+				- <a href="#" ng-click="">Company Link</a>
 			</span>
-			 - {{preview}}
+			 {{preview}}
 		</div>
 		<div style="
 			width: 100%;
