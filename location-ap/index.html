@@ -14,7 +14,7 @@
 				$scope.url = null;
 				$scope.country = '';
 				$scope.city = '';
-				$scope.state = '';
+				$scope.state = {};
 				$scope.body = '';
 				$scope.preview = '';
 
@@ -25,6 +25,11 @@
 
 				$scope.updateCity = function() {
 					$scope.city = $scope.city.toUpperCase();
+					if ($scope.city && window.apStatesStandalone.includes($scope.city.toLowerCase())) {
+						$scope.state.displayStateInDateline = false;
+					} else {
+						$scope.state.displayStateInDateline = true;
+					}
 				}
 
 				$scope.updateCountry = function(selected_country) {
@@ -44,12 +49,19 @@
 							if (!($scope.state.abbr).endsWith('.')) {
 								$scope.state.abbr = $scope.state.abbr + '.';
 							}
+
+							if ($scope.city && window.apStatesStandalone.includes($scope.city.toLowerCase())) {
+								$scope.state.displayStateInDateline = false;
+							} else {
+								$scope.state.displayStateInDateline = true;
+							}
 						}
 					});
 					if ($scope.state == null) {
 						$scope.state = {
 							name: selected_state,
 							abbr: selected_state + '.',
+							displayStateInDateline: true
 						}
 					}
 				}
@@ -112,8 +124,8 @@
 			<span ng-if="!city"><strong>CITY, </strong></span>
 
 			<span ng-if="!country || country.country == 'United States'">
-				<span ng-if="state">{{state.abbr}}</span> 
-				<span ng-if="!state">State.</span> 
+				<span ng-if="state && state.displayStateInDateline">{{state.abbr}}</span> 
+				<span ng-if="!state && !window.apStatesStandalone.contains(city.toLowerCase())">State.</span> 
 			</span>
 			<span ng-if="country && country.country != 'United States'">
 				{{country.country}}.

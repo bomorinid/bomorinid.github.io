@@ -48,3 +48,36 @@ window.apStates = [
 	{"name": "Wisconsin", "abbr": "Wis.", "code": "WI"},
 	{"name": "Wyoming", "abbr": "Wyo.", "code": "WY"}
 ]
+
+window.apStatesStandalone = [
+	"atlanta",
+	"baltimore",
+	"boston",
+	"chicago",
+	"cincinnati",
+	"cleveland",
+	"dallas",
+	"denver",
+	"detroit",
+	"honolulu",
+	"houston",
+	"indianapolis",
+	"las vegas",
+	"los angeles",
+	"miami",
+	"milwaukee",
+	"minneapolis",
+	"new orleans",
+	"new york",
+	"oklahoma city",
+	"philadelphia",
+	"phoenix",
+	"pittsburgh",
+	"st. louis",
+	"salt lake city",
+	"san antonio",
+	"san diego",
+	"san francisco",
+	"seattle",
+	"washington"
+]
